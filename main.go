@@ -28,6 +28,8 @@ func main() {
 	clientSourcePathPtr := clientCommand.String("source-path", "", "Source path of the file")
 	clientFilenamePtr := clientCommand.String("filename", "", "File name")
 
+	psSortingFilter := clientCommand.String("sortingFilter", "", "Sorting filter of processes")
+
 	if len(os.Args) < 2 {
 		log.Println("sub-command is required")
 		os.Exit(1)
@@ -60,6 +62,12 @@ func main() {
 			log.Printf("Get status: %t\n", status)
 			if status {
 				log.Println(contents)
+			}
+		} else if *clientOperationPtr == "ps" {
+			content, status := client.PsHandler(*psSortingFilter)
+			log.Printf("Ps status: %t\n", status)
+			if status {
+				log.Println(content)
 			}
 		}
 	}
